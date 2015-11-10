@@ -3,19 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .social-btn {
-  position: relative;
-  width: 200px;
-  height: 100px;
-  background-color: #43609C;
-  border: solid #6D9EFF 10px;
-  border-radius: 10px;
-  display: table-cell;
-  vertical-align: middle;
+  color: #00aced;
+  height: 20px;
+  padding: 5 5 5 5;
+  width: 100px;
   text-align: center;
-  font-style: tahoma;
-  font-weight: bold;
-  font-size: 20px;
-  color: white;
 }
 
 /* how could we eliminate the underlined text when we hover? I tried with
