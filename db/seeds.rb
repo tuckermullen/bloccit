@@ -2,23 +2,23 @@ include RandomData
 
 50.times do
 
-  Post.create!(
+  Advertisement.create!(
 
     title: RandomData.random_sentence,
-    body: RandomData.random_paragraph
+    copy: RandomData.random_paragraph
   )
 end
-posts = Post.all
+posts = Advertisement.all
 
 
 100.times do
-  Comment.create!(
+  Advertisement.create!(
 
-    post: posts.sample,
-    body: RandomData.random_paragraph
+    advertisement: advertisements.sample,
+    copy: RandomData.random_paragraph
   )
 end
 
 puts "Seed finished"
-puts "#{Post.count} posts created"
-puts "#{Comment.count} comments created"
+puts "#{Advertisement.count} posts created"
+puts "#{Advertisement.count} comments created"
