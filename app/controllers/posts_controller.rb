@@ -13,6 +13,8 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new
+    # {"utf8"=>"✓", "authenticity_token"=>"8zE6IXVyWGZMTBP7qDrSXGABbtK53+JgQgz1VLL9tyzz0h4NDutp/rcIkDGwGTAtvLrJXu0DwhLoTy89uC/xsA==", "post"=>{"title"=>"Post title", "body"=>"Body stuff"}, "commit"=>"Save"}
+    # {"title"=>"Post title", "body"=>"Body stuff"}
     @post.title = params[:post][:title]
     @post.body = params[:post][:body]
 

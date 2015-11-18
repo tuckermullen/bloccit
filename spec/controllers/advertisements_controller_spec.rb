@@ -69,4 +69,27 @@ RSpec.describe AdvertisementsController, type: :controller do
       post :create, advertisement: {title: RandomData.random_sentence, copy: RandomData.random_paragraph, price: 99}
     end
   end
+
+  describe "GET edit" do
+    it "returns http success" do
+      get :edit, {id: my_ad.id}
+      expect(response).to have_http_status(:success)
+    end
+
+    it "renders the #edit view" do
+      get :edit, {id: my_ad.id}
+      expect(response).to render_template :edit
+    end
+
+    it "assigns advertisement to be assigned to @advertisement" do
+      get :edit, {id: my_ad.id}
+
+      advertisement_instance = assigns(:advertisement)
+
+      expect(advertisement_instance.id).to eq my_ad.id
+      expect(advertisement_instance.title).to eq my_ad.title
+      expect(advertisement_instance.copy).to eq my_ad.copy
+      expect(advertisement_instance.price).to eq my_ad.price
+    end
+  end
 end
