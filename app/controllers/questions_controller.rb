@@ -22,6 +22,7 @@ class QuestionsController < ApplicationController
       redirect_to @question
     else
       flash[:error] = "There was an error saving your question. Please try again."
+      render.new
     end
   end
 
@@ -39,6 +40,7 @@ class QuestionsController < ApplicationController
       redirect_to @question
     else
       flash[:error] = "There was an error saving your question. Please try again."
+      render.new
     end
 
     def resolved
