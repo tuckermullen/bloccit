@@ -22,7 +22,7 @@ class QuestionsController < ApplicationController
       redirect_to @question
     else
       flash[:error] = "There was an error saving your question. Please try again."
-      render.new
+      render :new
     end
   end
 
@@ -33,7 +33,8 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     @question.title = params[:question][:title]
-    @question.body = params[:question][:title]
+    @question.body = params[:question][:body]
+    @question.resolved = params[:question][:resolved]
 
     if question.save
       flash[:notice] = "Question was updated."
@@ -41,10 +42,6 @@ class QuestionsController < ApplicationController
     else
       flash[:error] = "There was an error saving your question. Please try again."
       render.new
-    end
-
-    def resolved
-      
     end
 
     def destroy
