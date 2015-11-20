@@ -5,6 +5,7 @@ class AdvertisementsController < ApplicationController
   end
 
   def show
+    # raise 'this is the show action'
     @advertisement = Advertisement.find(params[:id])
     # render 'advertisements/index.html.erb'
   end
