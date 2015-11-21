@@ -32,4 +32,19 @@ class AdvertisementsController < ApplicationController
       render :new
     end
   end
+
+  def update
+    @advertisment = Advertisement.find(params[:id])
+    @advertisment.title = params[:advertisement][:title]
+    @advertisment.copy = params[:advertisement][:copy]
+    @advertisment.price = params[:advertisement][:price]
+
+    if @advertisement.save
+      flash[:notice] = "Advertisement was updated."
+      redirect_to @advertisement
+    else
+      flash[:error] = "Error saving advertisement. Please try again."
+      render :new
+    end
+  end
 end

@@ -1,27 +1,22 @@
-<h1>Show Advertisement</h1>
+<h1><%= @advertisement.title %></h1>
+
+<%= link_to "Edit advertisement", edit_advertisement_path, class: 'btn btn-success' %>
+<%= link_to "Delete advertisement", @advertisement, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this advertisement?' } %>
 
 <div class="row">
-  <div class="col-md-4">
-    <p>Guidelines for advertisements</p>
-    <ul>
-      <li>Guideline #1</li>
-      <li>Guideline #2</li>
-      <li>Guideline #3</li>
-    </ul>
-  </div>
   <div class="col-md-8">
-    <%= form_for @advertisement do |f| %>
-    <div class="form-group">
-      <%= f.label :title %>
-      <%= f.text_field :title, class: 'form-control', placeholder: "Enter advertisement title" %>
+    <p class="lead"><%= @advertisement.copy %></p>
+    <% @advertisement.each do |advertisement| %>
+    <div class="media">
+      <div class="media-body">
+        <h4 class="media-heading">
+          <%= link_to advertisement.title, advertisement_path(@advertisement) %>
+        </h4>
+      </div>
     </div>
-    <div class="form-group">
-      <%= f.label :copy %>
-      <%= f.text_area :copy, rows: 8, class: 'form-control', placeholder: "Enter advertisement copy" %>
-    </div>
-    <div class="form-group">
-      <%= f.submit "Save", class: 'btn btn-success' %>
-    </div>
-    <% end %>
+  <% end %>
+  </div>
+  <div class="col-md-4">
+    <%= link_to "New Advertisement", new_advertisement_path(@advertisement), class: 'btn btn-success' %>
   </div>
 </div>
