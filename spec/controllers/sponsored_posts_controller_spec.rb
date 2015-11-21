@@ -35,7 +35,7 @@ RSpec.describe SponsoredPostsController, type: :controller do
 
     it "instantiates @sponsored_post" do
       get :new, topic_id: my_topic.id
-      expect(assigns(:post)).not_to be_nil
+      expect(assigns(:sponsored_post)).not_to be_nil
     end
   end
 
