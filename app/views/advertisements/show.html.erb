@@ -6,17 +6,5 @@
 <div class="row">
   <div class="col-md-8">
     <p class="lead"><%= @advertisement.copy %></p>
-    <% @advertisement.each do |advertisement| %>
-    <div class="media">
-      <div class="media-body">
-        <h4 class="media-heading">
-          <%= link_to advertisement.title, advertisement_path(@advertisement) %>
-        </h4>
-      </div>
-    </div>
-  <% end %>
-  </div>
-  <div class="col-md-4">
-    <%= link_to "New Advertisement", new_advertisement_path(@advertisement), class: 'btn btn-success' %>
   </div>
 </div>

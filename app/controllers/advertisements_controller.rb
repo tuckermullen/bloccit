@@ -34,10 +34,10 @@ class AdvertisementsController < ApplicationController
   end
 
   def update
-    @advertisment = Advertisement.find(params[:id])
-    @advertisment.title = params[:advertisement][:title]
-    @advertisment.copy = params[:advertisement][:copy]
-    @advertisment.price = params[:advertisement][:price]
+    @advertisement = Advertisement.find(params[:id])
+    @advertisement.title = params[:advertisement][:title]
+    @advertisement.copy = params[:advertisement][:copy]
+    @advertisement.price = params[:advertisement][:price]
 
     if @advertisement.save
       flash[:notice] = "Advertisement was updated."
@@ -45,6 +45,18 @@ class AdvertisementsController < ApplicationController
     else
       flash[:error] = "Error saving advertisement. Please try again."
       render :new
+    end
+  end
+
+  def destroy
+    @advertisement = Advertisement.find(params[:id])
+
+    if @advertisement.destroy
+      flash[:notice] = "\"#{@advertisement.title}\" was deleted successfully."
+      redirect_to action: :index
+    else
+      flash[:error] = "There was an error deleting the advertisement."
+      render :show
     end
   end
 end
