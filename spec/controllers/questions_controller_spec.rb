@@ -2,7 +2,7 @@ require 'rails_helper'
 include RandomData
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:my_question) {Question.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: RandomData.random_result) }
+  let(:my_question) {Question.create!(id: 1, title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false) }
 
   describe "GET #index" do
     it "returns http success" do
@@ -37,35 +37,33 @@ RSpec.describe QuestionsController, type: :controller do
   describe "QUESTION create" do
 
     it "increases the number of Question by 1" do
-      expect{question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph}}.to change(Question,:count).by(1)
+      expect{question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false}}.to change(Question,:count).by(1)
     end
 
     it "assigns the new question to @question" do
-      question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+      question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false}
       expect(assigns(:question)).to eq Question.last
     end
 
     it "redirects to the new question" do
-      question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+      question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false}
       expect(response).to redirect_to Question.last
     end
   end
 
   describe "GET #show" do
     it "returns http success" do
-      get :show
+      get :show, {id: my_question.id}
       expect(response).to have_http_status(:success)
     end
 
     it "renders the #show view" do
-
       get :show, {id: my_question.id}
       expect(response).to render_template :show
     end
 
     it "assigns my_question to @question" do
       get :show, {id: my_question.id}
-
       expect(assigns(:question)).to eq(my_question)
     end
   end
@@ -99,20 +97,19 @@ RSpec.describe QuestionsController, type: :controller do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
 
-      put :update, id: my_question.id, question: {title: new_title, body: new_body}
+      put :update, id: my_question.id, question: { title: new_title, body: new_body, resolved: false }
 
       updated_question = assigns(:question)
       expect(updated_question.id).to eq my_question.id
       expect(updated_question.title).to eq my_question.title
       expect(updated_question.body).to eq my_question.body
-      expect(updated_question.resolved).to eq my_question.resolved
     end
 
     it "redirects to the updated question" do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
 
-      put :update, id: my_question.id, question: {title: new_title, body: new_body}
+      put :update, id: my_question.id, question: { title: new_title, body: new_body, resolved: false }
       expect(response).to redirect_to my_question
     end
   end

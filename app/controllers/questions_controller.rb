@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
     @question.body = params[:question][:body]
     @question.resolved = params[:question][:resolved]
 
-    if question.save
+    if @question.save
       flash[:notice] = "Question was saved."
       redirect_to @question
     else
@@ -41,19 +41,19 @@ class QuestionsController < ApplicationController
       redirect_to @question
     else
       flash[:error] = "There was an error saving your question. Please try again."
-      render.new
+      render :edit
     end
+  end
 
-    def destroy
-      @question = Question.find(params[:id])
+  def destroy
+    @question = Question.find(params[:id])
 
-      if @question.destroy
-        flash[:notice] = "\"#{@question.title}\" was deleted successfully."
-        redirect_to questions_path
-      else
-        flash[:error] = "There was an error deleting the question."
-        render :show
-      end
+    if @question.destroy
+      flash[:notice] = "\"#{@question.title}\" was deleted successfully."
+      redirect_to questions_path
+    else
+      flash[:error] = "There was an error deleting the question."
+      render :show
     end
   end
 end
