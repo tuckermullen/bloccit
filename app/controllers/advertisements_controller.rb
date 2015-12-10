@@ -5,6 +5,7 @@ class AdvertisementsController < ApplicationController
   end
 
   def show
+    # raise 'this is the show action'
     @advertisement = Advertisement.find(params[:id])
     # render 'advertisements/index.html.erb'
   end
@@ -29,6 +30,33 @@ class AdvertisementsController < ApplicationController
     else
       flash[:error] = "There was an error saving the advertisement. Please try again."
       render :new
+    end
+  end
+
+  def update
+    @advertisement = Advertisement.find(params[:id])
+    @advertisement.title = params[:advertisement][:title]
+    @advertisement.copy = params[:advertisement][:copy]
+    @advertisement.price = params[:advertisement][:price]
+
+    if @advertisement.save
+      flash[:notice] = "Advertisement was updated."
+      redirect_to @advertisement
+    else
+      flash[:error] = "Error saving advertisement. Please try again."
+      render :new
+    end
+  end
+
+  def destroy
+    @advertisement = Advertisement.find(params[:id])
+
+    if @advertisement.destroy
+      flash[:notice] = "\"#{@advertisement.title}\" was deleted successfully."
+      redirect_to action: :index
+    else
+      flash[:error] = "There was an error deleting the advertisement."
+      render :show
     end
   end
 end
