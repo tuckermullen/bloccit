@@ -2,7 +2,7 @@ require 'rails_helper'
 include RandomData
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:my_question) {Question.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: RandomData.random_result) }
+  let(:my_question) {Question.create!(id: 1, title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false) }
 
   describe "GET #index" do
     it "returns http success" do
@@ -58,14 +58,12 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it "renders the #show view" do
-
       get :show, {id: my_question.id}
       expect(response).to render_template :show
     end
 
     it "assigns my_question to @question" do
       get :show, {id: my_question.id}
-
       expect(assigns(:question)).to eq(my_question)
     end
   end
@@ -99,7 +97,7 @@ RSpec.describe QuestionsController, type: :controller do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
 
-      put :update, id: my_question.id, question: {title: new_title, body: new_body}
+      put :update, id: my_question.id, question: { title: new_title, body: new_body, resolved: false }
 
       my_question.reload
       updated_question = assigns(:question)
@@ -113,7 +111,7 @@ RSpec.describe QuestionsController, type: :controller do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
 
-      put :update, id: my_question.id, question: {title: new_title, body: new_body}
+      put :update, id: my_question.id, question: { title: new_title, body: new_body, resolved: false }
       expect(response).to redirect_to my_question
     end
   end
