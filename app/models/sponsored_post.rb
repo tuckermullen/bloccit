@@ -1,3 +1,3 @@
 class SponsoredPost < ActiveRecord::Base
-  belongs_to Topic
+  belongs_to :topic
 end

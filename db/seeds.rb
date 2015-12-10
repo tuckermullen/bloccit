@@ -1,13 +1,5 @@
 include RandomData
 
-20.times do
-  SponsoredPost.create!(
-  title: RandomData.random_sentence,
-  body: RandomData.random_paragraph,
-  price: RandomData.random_num
-  )
-end
-
 15.times do
   Topic.create!(
     name: RandomData.random_sentence,
@@ -19,7 +11,6 @@ topics = Topic.all
 50.times do
 
   Post.create!(
-
     topic: topics.sample,
     title: RandomData.random_sentence,
     body: RandomData.random_paragraph
@@ -27,6 +18,14 @@ topics = Topic.all
 end
 posts = Post.all
 
+20.times do
+  SponsoredPost.create!(
+  topic: topics.sample,
+  title: RandomData.random_sentence,
+  body: RandomData.random_paragraph,
+  price: RandomData.random_num
+  )
+end
 
 100.times do
   Comment.create!(
