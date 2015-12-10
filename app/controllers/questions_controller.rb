@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
     @question.body = params[:question][:body]
     # @question.resolved = params[:question][:resolved]
 
-    if question.save
+    if @question.save
       flash[:notice] = "Question was saved."
       redirect_to @question
     else
@@ -36,7 +36,7 @@ class QuestionsController < ApplicationController
     @question.body = params[:question][:body]
     @question.resolved = params[:question][:resolved]
 
-    if question.save
+    if @question.save
       flash[:notice] = "Question was updated."
       redirect_to @question
     else

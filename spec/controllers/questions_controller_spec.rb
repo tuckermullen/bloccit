@@ -37,23 +37,23 @@ RSpec.describe QuestionsController, type: :controller do
   describe "QUESTION create" do
 
     it "increases the number of Question by 1" do
-      expect{question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph}}.to change(Question,:count).by(1)
+      expect{post :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph}}.to change(Question,:count).by(1)
     end
 
     it "assigns the new question to @question" do
-      question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+      post :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
       expect(assigns(:question)).to eq Question.last
     end
 
     it "redirects to the new question" do
-      question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+      post :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
       expect(response).to redirect_to Question.last
     end
   end
 
   describe "GET #show" do
     it "returns http success" do
-      get :show
+      get :show, {id: my_question.id}
       expect(response).to have_http_status(:success)
     end
 
@@ -101,10 +101,11 @@ RSpec.describe QuestionsController, type: :controller do
 
       put :update, id: my_question.id, question: {title: new_title, body: new_body}
 
+      my_question.reload
       updated_question = assigns(:question)
       expect(updated_question.id).to eq my_question.id
-      expect(updated_question.title).to eq my_question.title
-      expect(updated_question.body).to eq my_question.body
+      expect(new_title).to eq my_question.title
+      expect(new_body).to eq my_question.body
       expect(updated_question.resolved).to eq my_question.resolved
     end
 
