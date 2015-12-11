@@ -28,9 +28,13 @@ RSpec.describe User, type: :model do
     end
 
     it "should format the user's name" do
-      user.name = "bloc user"
+      # 1. set up your beginning data (mimick potential user behavior)
+      # 2. trigger the event (i.e. calling a method)
+      # 3. test the expected outcome
+
+      user.name = "test user name"
       user.save
-      expect(user.name).to eq "Bloc User"
+      expect(user.name).to eq "Test User Name"
     end
   end
 
