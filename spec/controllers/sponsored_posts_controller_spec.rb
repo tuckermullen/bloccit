@@ -64,16 +64,16 @@ RSpec.describe SponsoredPostsController, type: :controller do
 
   describe "SPONSORED POST create" do
     it "increases the number of sponsored posts by 1" do
-      expect{sponsored_post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_num}}.to change(SponsoredPost, :count).by(1)
+      expect{post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_num}}.to change(SponsoredPost, :count).by(1)
     end
 
     it "assigns the new sponsored post to @sponsoredpost" do
-      sponsored_post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_num}
+      post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_num}
       expect(assigns(:sponsored_post)).to eq SponsoredPost.last
     end
 
     it "redirects to the new sponsored post" do
-      sponsored_post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_num}
+      post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_num}
       expect(response).to redirect_to [my_topic, SponsoredPost.last]
     end
   end
@@ -86,6 +86,7 @@ RSpec.describe SponsoredPostsController, type: :controller do
 
       put :update, topic_id: my_topic.id, id: my_spon_post.id, sponsored_post: {title: new_title, body: new_body, price: new_price}
 
+      my_spon_post.reload
       updated_spon_post = assigns(:sponsored_post)
       expect(updated_spon_post.id).to eq my_spon_post.id
       expect(updated_spon_post.title).to eq my_spon_post.title
@@ -111,7 +112,7 @@ RSpec.describe SponsoredPostsController, type: :controller do
     end
 
     it "redirects to topic show" do
-      delete :destroy, topic_id: my_topic.id, id: my_post.id
+      delete :destroy, topic_id: my_topic.id, id: my_spon_post.id
       expect(response).to redirect_to my_topic
     end
   end
