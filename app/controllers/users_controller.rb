@@ -18,5 +18,14 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  
+
+  def confirm
+    @user = User.new
+    @user.name = params[:user][:name]
+    @user.email = params[:user][:email]
+    @user.password = params[:user][:password]
+    @user.password_confirmation = params[:user][:password_confirmation]
+    #How do i send the params has back to the 'create' action?
+  end
+
 end
