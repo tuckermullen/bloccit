@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password") }
+  it { should have_many(:posts)}
+  
   # Shoulda tests for name
   it { should validate_presence_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }
@@ -44,6 +46,6 @@ RSpec.describe User, type: :model do
     it "should be an invalid user due t incorrectly formatted email address" do
       expect(user_with_invalid_email_format).to_not be_valid
     end
-    
+
   end
 end
