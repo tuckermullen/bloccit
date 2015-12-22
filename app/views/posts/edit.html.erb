@@ -9,6 +9,11 @@
       <li>The incessant use of hastags will get you banned.</li>
     </ul>
   </div>
+
+  <div class="form-group">
+    <%= render partial: 'ratings/form', locals: { ratings: ratings } %>
+  </div>
+
   <div class="col-md-8">
     <%= render partial: 'form', locals: { topic: @post.topic, post: @post } %>
   </div>
