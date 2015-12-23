@@ -1,7 +1,6 @@
 <h1><%= @topic.name %></h1>
-<div class="row">
-  <%= render partial: "ratings/display", locals: { ratings: ratings } %>
-</div>
+
+<%= render partial: "ratings/display", locals: { rating: @topic.rating } %>
 
 <% if user_is_authorized_for_topics? %>
   <%= link_to "Edit Topic", edit_topic_path, class: 'btn btn-success' %>
