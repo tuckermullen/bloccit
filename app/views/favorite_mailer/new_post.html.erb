@@ -4,15 +4,9 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h1>Your new post, "<%= @post.title %>"has been automatically favorited.</h1>
-    <small>
-      By: <%= @post.user.name %>
-    </small>
+    <h1>You're now following "<%= @post.title %>", you will be notifed of all comments. If you don't wish to receive further notifications, unfavorite your <%= link_to "post", topic_post_url(@post.topic, @post) %>.</h1>
     <p>
-      <%= @post.body %>
-    </p>
-    <p>
-      <%= link_to "View Post on site", topic_post_url(@post.topic, anchor: "post-#{@post.id}") %>
+      <%= link_to "View Post on site", topic_post_url(@post.topic, @post) %>
     </p>
   </body>
 </html>
