@@ -77,4 +77,17 @@ RSpec.describe Post, type: :model do
       end
     end
   end
+
+  describe "after_create" do
+    before do
+      @another_post = Post.new(title: 'Post Body', body: 'Post Body', user: user)
+    end
+
+    it "sends an email to the user who created the post" do
+      favorite = user.favorites.create(post: post)
+      expect(FavoriteMailer).to receive(:new_comment).with(user, post, @another_post).and_return(double(deliver_now: true))
+
+      @another_post.save
+    end
+  end
 end

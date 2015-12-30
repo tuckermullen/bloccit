@@ -31,4 +31,16 @@ class Post < ActiveRecord::Base
     new_rank = points + age_in_days
     update_attribute(:rank, new_rank)
   end
+
+  after_create :send_created_post_email
+
+  private
+
+  def send_created_post_email
+    if user.post.create!
+      FavoriteMailer.new_post(user, post, self).deliver_now
+    else
+      #
+    end
+  end
 end
