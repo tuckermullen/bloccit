@@ -15,8 +15,8 @@ class CommentsController < ApplicationController
       end
 
       respond_to do |format|
-        format.html
-        format.js
+        format.html# { render 'create.html.erb' } # default render is broken because missing file
+        format.js# { render 'create.js.erb' }
       end
     end
 
