@@ -5,19 +5,21 @@ class Api::V1::PostsController < Api::V1::BaseController
   def update
     @post = Post.find(params[:id])
 
-    if post.update_attributes(post_params)
-      render json: post.to_json, status: 200
+    if @post.update_attributes(post_params)
+      render json: @post.to_json, status: 200
     else
       render json: {error: "Post update failed", status: 400}, status: 400
     end
   end
 
   def create
-    @post = Post.new(post_params)
+    @topic = Topic.find(params[:topic_id])
+    @post = @topic.posts.new(post_params)
+    @post.user = @current_user
 
-    if post.valid?
-      post.save!
-      render json: post.to_json, status: 201
+    if @post.valid?
+      @post.save!
+      render json: @post.to_json, status: 201
     else
       render json: {error: "Post is invalid", status: 400}, status: 400
     end
@@ -26,7 +28,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   def destroy
     @post = Post.find(params[:id])
 
-    if post.destroy
+    if @post.destroy
       render json: {message: "Post destroyed", status: 200}, status: 200
     else
       render json: {error: "Post destroy failed", status: 400}, status: 400

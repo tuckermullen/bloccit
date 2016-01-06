@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::PostsController, type: :controller do
+  let(:my_user) { create(:user) }
   let(:my_topic) { create(:topic) }
   let(:my_post) { create(:post, topic: my_topic) }
 
@@ -23,6 +24,10 @@ RSpec.describe Api::V1::PostsController, type: :controller do
   end
 
   context "unauthorized user" do
+    before do
+      controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials(my_user.auth_token)
+      @new_post = build(:post)
+    end
 
     it "PUT update returns http forbidden" do
       put :update, topic_id: my_topic.id, id: my_post.id, post: {title: "Post Name", body: "Post Body"}
@@ -48,6 +53,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     end
 
     describe "PUT update" do
+      # /topics/1/posts/2
       before { put :update, topic_id: my_topic.id, id: my_post.id, post: {title: @new_post.title, body: @new_post.body} }
 
       it "returns http success" do
@@ -59,13 +65,15 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       end
 
       it "updates a post with the correct attributes" do
-        updated_post = Post.find(my_topic.id, :post)
+        # Post.find(1, 4)
+        updated_post = Post.find(my_post.id)
         expect(updated_post.to_json).to eq response.body
       end
     end
 
     describe "POST create" do
-      before { post :create, post: {title: @new_post.title, body: @new_post.body} }
+      # /topics/1/posts
+      before { post :create, topic_id: my_topic.id, post: {title: @new_post.title, body: @new_post.body} }
 
       it "returns http success" do
         expect(response).to have_http_status(:success)
@@ -98,7 +106,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       end
 
       it "deletes my_post" do
-        expect { Post.find(topic_id: my_topic.id, id: my_post.id) }.to raise_exception(ActiveRecord::RecordNotFound)
+        expect { Post.find(my_post.id) }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
   end
